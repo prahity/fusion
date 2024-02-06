@@ -1,0 +1,17 @@
+Link: https://leetcode.com/contest/weekly-contest-382/problems/alice-and-bob-playing-flower-game/
+
+class Solution {
+public:
+    long long flowerGame(int n, int m) {
+        long long ans = 0;
+        for(int i = 3; i <= m + n; i+=2) {
+            if(i <= min(m,n) + 1) {
+                ans+= i - 1;
+            } else {
+                int x = max(1,i - max(m,n));
+                ans += min(n,m) - x + 1;
+            }
+        }
+        return ans;
+    }
+};
