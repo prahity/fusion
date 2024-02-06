@@ -1,0 +1,23 @@
+Link: https://leetcode.com/problems/daily-temperatures/
+
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        stack<int> greaters;
+        vector<int> vals(temperatures.size());
+        greaters.push(temperatures.size() - 1);
+        vals[temperatures.size() - 1] = 0;
+        for(int i = temperatures.size() - 2; i >= 0; i--) {
+            while(greaters.size() != 0 && temperatures[greaters.top()] <= temperatures[i]) {
+                greaters.pop();
+            }
+            if(greaters.size() != 0) {
+                vals[i] = greaters.top() - i;
+            } else {
+                vals[i] = 0;
+            }
+            greaters.push(i);
+        }
+        return vals;
+    }
+};
