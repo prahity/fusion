@@ -1,0 +1,31 @@
+Link: https://leetcode.com/problems/sort-characters-by-frequency/
+
+struct cmp {
+    bool operator()(const std::pair<char,int> &left, const std::pair<char,int> &right) {
+        return left.second > right.second;
+    }
+};
+class Solution {
+    public:
+    string frequencySort(string s) {
+        string answer = "";
+        map<char,int> freqs;
+        for(char i : s) {
+            freqs[i] += 1;
+        }
+        vector<pair<char,int>> sorted;
+        for(pair<char,int> val : freqs) {
+            sorted.push_back(val);
+        }
+        sort(sorted.begin(),sorted.end(),cmp());
+        for(pair<char, int> val : sorted) {
+            for(int i = 0; i < val.second; i++) {
+                answer += val.first;
+            }
+        }
+        return answer;
+    }
+    
+};
+
+
