@@ -1,0 +1,30 @@
+Link: https://leetcode.com/problems/group-anagrams/
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string,vector<string>> val;
+        for(string str : strs) {
+            int arr[26] = {0};
+            for(char ch : str) {
+                arr[ch - 'a'] += 1;
+            }
+            string hash = "";
+            for(int v : arr) {
+                hash += ('a' + v);
+                hash += v;
+            }
+            val[hash].push_back(str);
+            
+        }
+        vector<vector<string>> result;
+
+        auto begin = val.begin();
+        while(begin != val.end()) {
+            result.push_back(begin->second);
+            begin++;
+        }
+        return result; 
+
+    }
+};
