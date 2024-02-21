@@ -1,0 +1,61 @@
+Link: https://leetcode.com/problems/valid-sudoku/
+
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        vector<bool> exists(9);
+        for(vector<char> row : board) {
+            for(char i : row) {
+                if(!updateVal(i,exists)) {
+                    return false;
+                }
+            }
+            fill(exists.begin(),exists.end(),false);
+        }
+
+        for(int i = 0; i < 9; i++) {
+            for(vector<char> row : board) {
+                if(!updateVal(row[i],exists)) {
+                    return false;
+                }
+            }
+            fill(exists.begin(),exists.end(),false);
+        }
+
+        int mult1 = 0;
+        int mult2 = 0;
+
+        while(mult1 != 3) {
+            while(mult2 != 3) {
+                    for(int j = 0; j < 3; j++) {
+                        if(!updateVal(board[mult1 * 3][mult2 * 3 + j],exists)) {
+                            return false;
+                        }
+                        if(!updateVal(board[mult1 * 3 + 1][mult2 * 3 + j],exists)) {
+                            return false;
+                        }
+                        if(!updateVal(board[mult1 * 3 + 2][mult2 * 3 + j],exists)) {
+                            return false;
+                        }     
+                    }
+                fill(exists.begin(),exists.end(),false);
+                mult2++;
+            }
+            mult2 = 0;
+            mult1++;
+        }
+
+        return true;
+    }
+
+    bool updateVal(char i,vector<bool>& exists) {
+        if(i != '.'){
+            if(exists[i - '1'] == false) {
+                exists[i - '1'] = true;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+};
