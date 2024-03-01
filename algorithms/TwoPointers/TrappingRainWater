@@ -1,0 +1,28 @@
+Link: https://leetcode.com/problems/trapping-rain-water/
+
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int water = 0;
+        int slow = 0;
+        int fast = height.size() - 1;
+        int slowMax = 0;
+        int fastMax = 0;
+        while(slow <= fast) {
+            if(slowMax < fastMax) {
+                water += max(0,slowMax - height[slow]);
+                slowMax = max(slowMax,height[slow]);
+                slow++;
+            } else {
+                water += max(0,fastMax - height[fast]);
+                fastMax = max(fastMax,height[fast]);
+                fast--;
+
+            }
+            cout << water << " ";
+        }
+        return water;
+    }
+};
+
