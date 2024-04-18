@@ -1,0 +1,38 @@
+Link: https://leetcode.com/problems/largest-rectangle-in-histogram/
+
+/* create stack of index, value; if next value is greater add to stack
+    if next value is smaller calculate current area from previous value
+    using current index until a previous value is smaller then add current
+    value to stack at position it is at. After going through all values 
+    check max areas in stack left over*/
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int maxArea = heights[0];
+        stack<pair<int,int>> vals;
+        vals.push({0,-1});
+        vals.push({1,heights[0]});
+        for(int i = 1; i < heights.size(); i++) {
+            if(heights[i] > vals.top().second) {
+                vals.push({i + 1,heights[i]});
+            } else {
+                int prevs = vals.top().first;
+                while(heights[i] <= vals.top().second) {
+                    maxArea = max(maxArea,vals.top().second * (i + 1 - vals.top().first));
+                    prevs = vals.top().first;
+                    vals.pop();      
+                }
+                vals.push({prevs,heights[i]});
+            }
+        }
+        while(vals.size() != 0) {
+            maxArea = max((int)maxArea,(int)(vals.top().second * (heights.size() + 1
+             - vals.top().first)));
+            vals.pop();
+        }
+
+
+
+        return maxArea;
+    }
+};
